@@ -1,0 +1,27 @@
+body { 
+  color: #fff; 
+  background-color: #333; 
+  margin: 40px 80px; 
+  font-family: helvetica; 
+  color: #aaa;
+  text-shadow: #333 0 -1px 1px;
+}
+
+.column { width: 33.33%; float: left; }
+
+.box {
+  margin-bottom: 10px; 
+  border: 1px solid #777; 
+  background-color: #555; 
+  padding: 0 20px; 
+  border-radius: 4px; 
+  margin-right: 10px;
+}
+
+#panel {
+  display: none;
+  margin-bottom: 30px; 
+  border: 1px solid #777; 
+  background-color: #444; 
+  border-radius: 4px;
+}

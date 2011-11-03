@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Panel Sort Demo</title>
+    <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/panelsort.css" type="text/css" media="screen">
+    <script type="text/javascript" src="js/jquery-1.6.2.min.js" ></script>
+    <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.panelsort.js"></script>
+  </head>
+  <body>
+    <h1>Panel Sort Demo</h1>
+    <center><div id="panel" style="width: 50%"></div></center>
+    <div id="items">
+      <div class="column one">
+        <div class="static item box">
+          <p>Static One</p>
+        </div>
+        <div id="id-1" class="item box">
+          <h2 class="title">One</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div id="id-3" class="item box">
+          <h2 class="title">Three</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="static item box">
+          <p>Static Two</p>
+        </div>
+        <div id="id-5" class="item box">
+          <h2 class="title">Five</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+      <div class="column two">
+        <div id="id-2" class="item box">
+          <h2 class="title">Two</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div id="id-4" class="item box">
+          <h2 class="title">Four</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="static item box">
+          <p>Static Three</p>
+        </div>
+        <div id="id-6" class="item box">
+          <h2 class="title">Six</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="static item box">
+          <p>Static Four</p>
+        </div>
+      </div>
+      <div class="column three">
+        <div id="id-7" class="item box">
+          <h2 class="title">Seven</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="static item box">
+          <p>Static Five</p>
+        </div>
+        <div class="static item box">
+          <p>Static Six</p>
+        </div>
+        <div id="id-8" class="item box">
+          <h2 class="title">Eight</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div id="id-9" class="item box">
+          <h2 class="title">Nine</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#panel").panelsort();
+      });
+    </script>
+  </body>
+</html>
