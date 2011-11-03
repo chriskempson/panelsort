@@ -7,7 +7,7 @@ body {
   text-shadow: #333 0 -1px 1px;
 }
 
-.column { width: 33.33%; float: left; }
+.ps-column { width: 33.33%; float: left; }
 
 .box {
   margin-bottom: 10px; 

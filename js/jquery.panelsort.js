@@ -4,16 +4,17 @@
 (function($){
   
   var settings = {
-    containerElement: '#items',
-    columnElement: '.column',
-    itemElement: '.item',
-    titleElement: '.title',
+    containerElement: '#ps-items',
+    columnClass: 'ps-column',
+    itemClass: 'ps-item',
+    staticItemClass: 'ps-static-item',
+    titleClass: 'ps-title',
     cookieName: 'panelsort',
     sortableSettings: {
       opacity: 0.8,
       forcePlaceholderSize: true,
       revert: 200,
-      placeholder: 'ps-placeholder'
+      placeholder: 'ps-panel-placeholder'
     }
   };
 
@@ -26,21 +27,24 @@
     var $this = $(this);
     $(this).show(); // Make sure the panel is visible
     var sortableArray = [];
-    var columnCount = $(settings.containerElement).find(settings.columnElement).length;
+    var columnCount = $(settings.containerElement).find('.'+settings.columnClass).length;
     
     // Collect array of static items and store their positions
     var column = 0;
-    $(settings.containerElement).find(settings.columnElement).each(function() {
+    $(settings.containerElement).find('.'+settings.columnClass).each(function() {
       var position = 0;
-      $(this).find(settings.itemElement).each(function() {
-        if ($(this).hasClass('static')) {
+      $(this).find('.'+settings.itemClass+', .'+settings.staticItemClass).each(function() {
+        if ($(this).hasClass(settings.staticItemClass)) {
           staticItemArray.push([column, position, $(this)]);
-        } position++;
-      }); column++;
+        };
+        position++;
+      });
+      column++;
     });
+    console.log(staticItemArray)
     
     // Update sortables
-    reorderItems();
+    if ($.cookie(settings.cookieName)) reorderItems();
 
     return this.each(function() {
       
@@ -50,31 +54,30 @@
       }
       
       // For each column
-      $(settings.containerElement).find(settings.columnElement).each(function() {
-        
+      $(settings.containerElement).find('.'+settings.columnClass).each(function() {
+
         var column = $('<ul />', {
-          class: 'ps-column',
+          class: 'ps-panel-column',
           style: 'width:' + (100 / columnCount) + '%'
         });
+        $this.append(column);
         
         // For each item
-        $(this).find(settings.itemElement).each(function() {
+        $(this).find('.'+settings.itemClass).each(function() {
           column.append($('<li />', {
-            text: $(this).find(settings.titleElement).html(),
-            class: 'ps-item'
+            html: '<span class="ps-panel-icon"></span><span class="ps-panel-title">'+$(this).find('.'+settings.titleClass).html()+'</span>',
+            class: 'ps-panel-item'
           }).attr('title', $(this).attr('id')));
-          
-          $this.append(column);
         });
       });
       
       // Make sortable
-      $('.ps-column').sortable($.extend(settings.sortableSettings, {
-        connectWith: '.ps-column',
+      $('.ps-panel-column').sortable($.extend(settings.sortableSettings, {
+        connectWith: '.ps-panel-column',
         attribute: 'title',
         key: 'title',
         update: function() {
-            $('.ps-column').each(function() {
+            $('.ps-panel-column').each(function() {
               var array = $(this).sortable('toArray', {
                 attribute: 'title'
               })
@@ -103,28 +106,28 @@
     var itemArray = [];
         
     // Loop round current columns and items
-    $(settings.containerElement).find(settings.columnElement).each(function() {
-      $(this).find(settings.itemElement).each(function() {
+    $(settings.containerElement).find('.'+settings.columnClass).each(function() {
+      $(this).find('.'+settings.itemClass).each(function() {
         itemArray[$(this).attr('id')] = $(this);
       });
     });
 
     // Loop round the sorted columns and items
     for (var column in idArray) {
-      $(settings.columnElement+':eq('+column+')').empty();
+      $('.'+settings.columnClass+':eq('+column+')').empty();
       for (var item in idArray[column]) {
         id = idArray[column][item];
-        $(settings.columnElement+':eq('+column+')').append(itemArray[id]);
+        $('.'+settings.columnClass+':eq('+column+')').append(itemArray[id]);
       }
     }
     
     // Loop round our static items
     for (var item in staticItemArray) {
-      var column = $(settings.columnElement+':eq('+staticItemArray[item][0]+')');
-      var position = column.find(settings.itemElement+':eq('+staticItemArray[item][1]+')');
-      
+      var column = $('.'+settings.columnClass+':eq('+staticItemArray[item][0]+')');
+      var position = column.find('.'+settings.itemClass+', .'+settings.staticItemClass).eq(staticItemArray[item][1]);
+
       // If the position we want doesn't exist just add it to the column
-      if (position.html()) {
+      if (position.length) {
         position.before(staticItemArray[item][2]);
       } else {
         column.append(staticItemArray[item][2]);

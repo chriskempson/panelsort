@@ -1,4 +1,4 @@
-ul.ps-column {
+ul.ps-panel-column {
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -6,20 +6,27 @@ ul.ps-column {
   min-height: 50px;
 }
 
-.ps-column { display: inline-block; }
+.ps-panel-column { display: inline-block; }
 
-.ps-item {
+.ps-panel-item {
   background-color: #555;
   cursor: move;
   border: 2px solid #555;
 }
 
-.ps-placeholder {
+.ps-panel-placeholder {
   background-color: none;
   border: 2px dashed #999;
 }
 
-.ps-item, .ps-placeholder {
+.ps-panel-item, .ps-panel-placeholder {
   padding: 5px;
   margin: 5px;
+}
+
+.ps-icon {
+  display: inline-block;
+  background-image: url('image/example.png');
+  width: 16px;
+  height: 16px;
 }
