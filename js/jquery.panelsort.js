@@ -41,15 +41,17 @@
       });
       column++;
     });
-    console.log(staticItemArray)
     
     // Update sortables
     if ($.cookie(settings.cookieName)) reorderItems();
 
     return this.each(function() {
       
-      // Merge any supplied settings
-      if (options) { 
+      if (options) {
+        // Merge any supplied sortable settings
+        if (options.sortableSettings) $.extend(options.sortableSettings, settings.sortableSettings);
+        
+        // Merge any supplied settings
         $.extend(settings, options);
       }
       
@@ -67,19 +69,19 @@
           column.append($('<li />', {
             html: '<span class="ps-panel-icon"></span><span class="ps-panel-title">'+$(this).find('.'+settings.titleClass).html()+'</span>',
             class: 'ps-panel-item'
-          }).attr('title', $(this).attr('id')));
+          }).attr('rel', $(this).attr('id')));
         });
       });
       
       // Make sortable
       $('.ps-panel-column').sortable($.extend(settings.sortableSettings, {
         connectWith: '.ps-panel-column',
-        attribute: 'title',
-        key: 'title',
+        attribute: 'rel',
+        key: 'rel',
         update: function() {
             $('.ps-panel-column').each(function() {
               var array = $(this).sortable('toArray', {
-                attribute: 'title'
+                attribute: 'rel'
               })
               sortableArray.push(array);
             });
