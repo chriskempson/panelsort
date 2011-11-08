@@ -59,7 +59,7 @@
       $(settings.containerElement).find('.'+settings.columnClass).each(function() {
 
         var column = $('<ul />', {
-          class: 'ps-panel-column',
+          'class': 'ps-panel-column',
           style: 'width:' + (100 / columnCount) + '%'
         });
         $this.append(column);
@@ -67,8 +67,8 @@
         // For each item
         $(this).find('.'+settings.itemClass).each(function() {
           column.append($('<li />', {
-            html: '<span class="ps-panel-icon"></span><span class="ps-panel-title">'+$(this).find('.'+settings.titleClass).html()+'</span>',
-            class: 'ps-panel-item'
+            html: '<span class="ps-panel-icon"></span><span class="ps-panel-title">'+getItemTitle($(this))+'</span>',
+            'class': 'ps-panel-item'
           }).attr('rel', $(this).attr('id')));
         });
       });
@@ -138,6 +138,12 @@
     
     // Clear array
     items = [];
+  }
+  
+  getItemTitle = function(item) {
+    if (item.attr('title')) return item.attr('title');
+    else if (item.find('.'+settings.titleClass).html()) return item.find('.'+settings.titleClass).html();
+    else return 'Item';
   }
   
 })(jQuery);
