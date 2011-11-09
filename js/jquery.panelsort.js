@@ -1,7 +1,11 @@
-// Panel Sort jQuery Plugin
-// 2011-11-02 Chris Kempson
-// Makes use of jQueryUI Sortables and jQuery Cookie
-
+/**
+ * jQuery Panel Sort plugin
+ *
+ * Copyright (c) 2011 Chris Kempson (chriskempson.com)
+ * Licensed under the GPL license:
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ */
 (function($){
 
 	var settings = {
