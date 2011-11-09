@@ -1,8 +1,9 @@
 // Panel Sort jQuery Plugin
 // 2011-11-02 Chris Kempson
+// Makes use of jQueryUI Sortables and jQuery Cookie
 
 (function($){
-  
+
   var settings = {
     containerElement: '#ps-items',
     columnClass: 'ps-column',
@@ -15,20 +16,23 @@
       forcePlaceholderSize: true,
       revert: 200,
       placeholder: 'ps-panel-placeholder'
+    },
+    cookieSettings: {
+      expires: 1826 // 5 Years
     }
   };
 
   // Two dimensional arrray for holding positions of static items
   var staticItemArray = [];
-  
 
-  $.fn.panelsort = function(options) {  
+
+  $.fn.panelsort = function(options) {
 
     var $this = $(this);
     $(this).show(); // Make sure the panel is visible
     var sortableArray = [];
     var columnCount = $(settings.containerElement).find('.'+settings.columnClass).length;
-    
+
     // Collect array of static items and store their positions
     var column = 0;
     $(settings.containerElement).find('.'+settings.columnClass).each(function() {
@@ -41,20 +45,15 @@
       });
       column++;
     });
-    
+
     // Update sortables
     if ($.cookie(settings.cookieName)) reorderItems();
 
     return this.each(function() {
-      
-      if (options) {
-        // Merge any supplied sortable settings
-        if (options.sortableSettings) $.extend(options.sortableSettings, settings.sortableSettings);
-        
-        // Merge any supplied settings
-        $.extend(settings, options);
-      }
-      
+
+      // Merge any supplied settings
+      if (options) { $.extend(true, settings, options); }
+
       // For each column
       $(settings.containerElement).find('.'+settings.columnClass).each(function() {
 
@@ -63,7 +62,7 @@
           style: 'width:' + (100 / columnCount) + '%'
         });
         $this.append(column);
-        
+
         // For each item
         $(this).find('.'+settings.itemClass).each(function() {
           column.append($('<li />', {
@@ -72,7 +71,7 @@
           }).attr('rel', $(this).attr('id')));
         });
       });
-      
+
       // Make sortable
       $('.ps-panel-column').sortable($.extend(settings.sortableSettings, {
         connectWith: '.ps-panel-column',
@@ -85,28 +84,28 @@
               })
               sortableArray.push(array);
             });
-            
-            // JSONify 
+
+            // JSONify
             var sortableJSON = $.toJSON(sortableArray)
 
             // Store values in Cookie
-            $.cookie(settings.cookieName, sortableJSON);
-            
+            $.cookie(settings.cookieName, sortableJSON, settings.cookieSettings);
+
             // Update sortables
             reorderItems();
-            
+
             // Clear array
             sortableArray = [];
         }
       }));
     });
   };
-  
+
   reorderItems = function() {
-    
+
     var idArray = $.evalJSON($.cookie(settings.cookieName));
     var itemArray = [];
-        
+
     // Loop round current columns and items
     $(settings.containerElement).find('.'+settings.columnClass).each(function() {
       $(this).find('.'+settings.itemClass).each(function() {
@@ -122,7 +121,7 @@
         $('.'+settings.columnClass+':eq('+column+')').append(itemArray[id]);
       }
     }
-    
+
     // Loop round our static items
     for (var item in staticItemArray) {
       var column = $('.'+settings.columnClass+':eq('+staticItemArray[item][0]+')');
@@ -135,15 +134,15 @@
         column.append(staticItemArray[item][2]);
       }
     }
-    
+
     // Clear array
     items = [];
   }
-  
+
   getItemTitle = function(item) {
     if (item.attr('title')) return item.attr('title');
     else if (item.find('.'+settings.titleClass).html()) return item.find('.'+settings.titleClass).html();
     else return 'Item';
   }
-  
+
 })(jQuery);
